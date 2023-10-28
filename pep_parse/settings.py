@@ -22,3 +22,6 @@ FEEDS = {
 ITEM_PIPELINES = {
     'pep_parse.pipelines.PepParsePipeline': 300,
 }
+
+ALLOWED_DOMAINS_FOR_PEP = ["peps.python.org"]
+START_URLS_FOR_PEP = ["https://peps.python.org/"]

@@ -2,12 +2,13 @@ import scrapy
 import re
 
 from pep_parse.items import PepParseItem
+from pep_parse.settings import ALLOWED_DOMAINS_FOR_PEP, START_URLS_FOR_PEP
 
 
 class PepSpider(scrapy.Spider):
     name = "pep"
-    allowed_domains = ["peps.python.org"]
-    start_urls = ["https://peps.python.org/"]
+    allowed_domains = ALLOWED_DOMAINS_FOR_PEP
+    start_urls = START_URLS_FOR_PEP
 
     def parse(self, response):
         numerical_index_table = response.css(

@@ -1,6 +1,7 @@
 from collections import defaultdict
 from pathlib import Path
 import datetime as dt
+import csv
 
 BASE_DIR = Path(__file__).parent.parent
 DATETIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
@@ -20,10 +21,8 @@ class PepParsePipeline:
         results_dir = BASE_DIR / RESULTS_DIR_NAME
         results_dir.mkdir(exist_ok=True)
         file = results_dir / FILE_NAME
-        with open(file, mode='w', encoding='utf-8') as f:
-            f.write('Статус, Количество\n')
-            total = 0
-            for status, count in self.status_counter.items():
-                f.write(f'{status}, {count}\n')
-                total += count
-            f.write(f'Total,{total}\n')
+        self.status_counter['Total'] = sum(self.status_counter.values())
+        with open(file, mode='w', encoding='utf-8', newline='') as csvfile:
+            status_writer = csv.writer(csvfile)
+            status_writer.writerow(['Статус', 'Количество'])
+            status_writer.writerows(self.status_counter.items())
